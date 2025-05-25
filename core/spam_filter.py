@@ -1,4 +1,5 @@
-SPAM_KEYWORDS = ["выиграли", "бесплатно", "деньги", "ссылка", "предложение", "срочно", "купите сейчас", "безпроигрышная победа"]
+SPAM_KEYWORDS = ["win win"]
+SPAM_URLS = ["https://www.hse.ru"]
 
 def is_spam(text: str, spam_threshold: float = 0.3) -> bool:
     text_lower = text.lower()

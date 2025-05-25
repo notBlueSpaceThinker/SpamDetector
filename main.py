@@ -31,11 +31,11 @@ templates = Jinja2Templates(directory="templates")
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-#подкрутить очистку uploads через shutil ?
+
 @app.post("/analyze/")
 async def analyze_file(file: UploadFile = File(...)):
     #cоздание уникального имени файла и сохранение пути в filepath
-    filename = f"{uuid.uuid5()}_{file.filename}"
+    filename = f"{uuid.uuid4()}_{file.filename}"
     filepath = os.path.join(UPLOAD_DIR, filename)  
 
     #сохранение файла в uploads
@@ -50,6 +50,9 @@ async def analyze_file(file: UploadFile = File(...)):
     raw = read_text_file(filepath)
     cleaned = clean_text(raw)
     result = is_spam(cleaned)
+
+    #Удалить файл после анализа
+    # os.remove(filepath)
 
     return {
         "filename": file.filename,
