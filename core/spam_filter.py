@@ -1,5 +1,15 @@
-SPAM_KEYWORDS = ["win", "free", "money", "click", "offer", "urgent", "buy now", "lottery"]
+SPAM_KEYWORDS = ["выиграли", "бесплатно", "деньги", "ссылка", "предложение", "срочно", "купите сейчас", "безпроигрышная победа"]
 
-def is_spam(text: str) -> bool:
+def is_spam(text: str, spam_threshold: float = 0.3) -> bool:
     text_lower = text.lower()
-    return any(keyword in text_lower for keyword in SPAM_KEYWORDS)
+    total_words = len(text_lower.split())
+    if total_words == 0:
+        return False
+    
+    spam_word_count = 0
+    for keyword in SPAM_KEYWORDS:
+        if keyword in text_lower:
+            spam_word_count += 1
+
+    spam_ratio = spam_word_count / total_words
+    return spam_ratio >= spam_threshold
