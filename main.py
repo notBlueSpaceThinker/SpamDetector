@@ -8,7 +8,7 @@ import uuid
 import shutil
 
 from core.file_loader import read_text_file
-from core.text_cleaner import clean_text
+from core.text_cleaner import clean_text, extract_links
 from core.spam_filter import is_spam
 
 BASE_DIR = os.path.dirname(__file__)
@@ -34,6 +34,8 @@ async def home(request: Request):
 
 @app.post("/analyze/")
 async def analyze_file(file: UploadFile = File(...)):
+    if not file.filename.endswith('.txt'):
+        raise TypeError("Поддерживаются только текстовые файлы")
     #cоздание уникального имени файла и сохранение пути в filepath
     filename = f"{uuid.uuid4()}_{file.filename}"
     filepath = os.path.join(UPLOAD_DIR, filename)  
@@ -42,21 +44,27 @@ async def analyze_file(file: UploadFile = File(...)):
     with open(filepath, "wb") as buffer:                
         shutil.copyfileobj(file.file, buffer)           
 
-
     # ReturnData.filename = filename
     # ReturnData.cleaned_text = clean_text(cleaned)
     # ReturnData.is_spam = is_spam(ReturnData.cleaned_text)
 
-    raw = read_text_file(filepath)
-    cleaned = clean_text(raw)
-    result = is_spam(cleaned)
+    # print("Raw:", raw)
+    # print("Cleaned:", cleaned)
+    # print("Links:", extract_links(raw))
 
-    #Удалить файл после анализа
-    # os.remove(filepath)
+    try:
+        raw = read_text_file(filepath)
+        if not raw.isascii():
+            raise TypeError("Файл может содержать только символы и буквы английского языка")
+        cleaned = clean_text(raw)
+        result = is_spam(cleaned)
+    except Exception as e:
+        raise TypeError(f"Ошибка в обработке файла: {str(e)}")
 
+    os.remove(filepath)
+    
     return {
         "filename": file.filename,
         "is_spam": result,
         "cleaned_text": cleaned
     }
-
