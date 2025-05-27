@@ -3,8 +3,6 @@ import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-# word definition
-# from nltk.corpus import wordnet as wn -> wn.synsets()
 
 
 nltk.download('punkt')
@@ -16,15 +14,17 @@ lemmatizer = WordNetLemmatizer()
 
 def extract_links(text: str) -> list[str]:
     links = re.findall(r'(https?://\S+|www\.\S+)', text)
+    if not links:
+        print("Файл без ссылок")
+        
     return links
 
-# lemmatizer.morphy
-# Попробовать вариант в очисткой токенизированных слов и отправкой
-# токенезированного списка предложений
-def clean_text(text: str) -> str:
+def extract_tokens(text: str) -> list[str]:
     if not text:
         print("Файл без текста")
         return ""
+    if not text.isascii():
+        raise ValueError("Поддерживаются только файлы на Английском языке")
 
     text = re.sub(r"<.*?>", "", text)
 
@@ -35,9 +35,19 @@ def clean_text(text: str) -> str:
     tokens = [
         lemmatizer.lemmatize(t)
         for t in tokens
-          if t.isalpha() and t not in stop_words
+        if t.isalpha() and t not in stop_words
     ]
 
-    print(f"{tokens}")
+    print(f"Токены: {tokens}")
 
-    return " ".join(tokens)
+    return tokens
+
+def extract_tokens_and_links(text: str) -> tuple[str, list[str]]:
+    if not text:
+        print("Файл без текста")
+        return "", []
+    
+    links = extract_links(text)
+    tokens = extract_tokens(text)
+
+    return tokens, links 
