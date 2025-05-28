@@ -75,7 +75,7 @@ function processFile(file) {
         }
         return res.json();
     }).then(function(data) {
-        result.innerText = data.is_spam ? "СПАМ" : "НЕ СПАМ";
+        result.innerText = data.is_spam ? "ну спамСПАМ" : "НЕ СПАМ";
         text.innerText = data.cleaned_text || "";
     }).catch(function(err) {
         result.innerText = "Ошибка анализа";
