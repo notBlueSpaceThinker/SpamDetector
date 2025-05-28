@@ -1,32 +1,32 @@
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212;
-    color: #e0e0e0;
-    text-align: center;
-    padding: 50px;
-    margin: 0;
-}
-
-#drop-area {
-    border: 2px dashed #444;
-    border-radius: 12px;
-    padding: 30px;
-    width: 320px;
-    margin: auto;
     background-color: #1e1e1e;
-    box-shadow: 0 0 10px rgba(0, 255, 170, 0.1);
-    transition: border-color 0.3s ease;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
 }
 
-#drop-area:hover {
-    border-color: #00ffaa;
+h1 {
+    text-align: center;
+    color: #61dafb;
+    margin-top: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    background-color: #2b2b2b;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 input[type="file"] {
     display: none;
 }
 
-label {
+label[for="file-upload"] {
     display: inline-block;
     padding: 12px 24px;
     background-color: #00ffaa;
@@ -60,4 +60,49 @@ pre {
     box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.05);
     color: #cfcfcf;
     font-family: 'Courier New', monospace;
+    padding: 12px 20px;
+    background-color: #444;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+label[for="file-upload"]:hover {
+    background-color: #666;
+}
+
+#drop-area {
+    border: 2px dashed #666;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    background: #1e1e1e;
+    margin-bottom: 20px;
+    color: #ccc;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+#drop-area.highlight {
+    border-color: #61dafb;
+    background-color: #2e2e2e;
+}
+
+#result, #cleanedText {
+    font-size: 1.1rem;
+    margin-top: 15px;
+    word-wrap: break-word;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+a {
+    color: #61dafb;
+}
+
+a:hover {
+    color: #1fa8ff;
+
 }
