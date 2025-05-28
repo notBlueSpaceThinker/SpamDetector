@@ -36,7 +36,8 @@ spam_detector/
 │
 ├── main.py                 # Основной файл FastAPI-приложения
 └── requirements.txt        # Зависимости проекта
-</details> ```
+```
+</details> 
 
 ### 💫 Как запустить проект
 
