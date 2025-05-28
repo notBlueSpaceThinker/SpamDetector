@@ -1,35 +1,84 @@
+// Получаем нужные элементы
+const dropZone = document.getElementById("drop-area");
+const fileInput = document.getElementById("fileElem");
+const browseLink = document.getElementById("browse");
+
+// Отключаем стандартное поведение для dnd
+dropZone.addEventListener("dragenter", stopDefaults, false);
+dropZone.addEventListener("dragover", stopDefaults, false);
+dropZone.addEventListener("dragleave", stopDefaults, false);
+dropZone.addEventListener("drop", stopDefaults, false);
+
+function stopDefaults(e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+// Наведение и убирание подсветки
+dropZone.addEventListener("dragenter", function() {
+    dropZone.classList.add("highlight");
+}, false);
+
+dropZone.addEventListener("dragover", function() {
+    dropZone.classList.add("highlight");
+}, false);
+
+dropZone.addEventListener("dragleave", function() {
+    dropZone.classList.remove("highlight");
+}, false);
+
+dropZone.addEventListener("drop", function() {
+    dropZone.classList.remove("highlight");
+}, false);
+
+// Обработка сброса файла
+dropZone.addEventListener("drop", function(e) {
+    let files = e.dataTransfer.files;
+    if (files && files.length > 0) {
+        processFile(files[0]);
+    }
+}, false);
+
+// Клик по ссылке вызывает input
+browseLink.onclick = function() {
+    fileInput.click();
+};
+
+// Файл выбран вручную
+fileInput.onchange = function() {
+    if (fileInput.files.length > 0) {
+        processFile(fileInput.files[0]);
+    }
+};
+
 // Обработка файла
-function handleFiles(files) {
-    if (!files.length) return;
+function processFile(file) {
+    if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", files[0]);
+    let formData = new FormData();
+    formData.append("file", file);
 
-    // Очистка старого результата
-    document.getElementById("result").innerText = "⏳ Анализ...";
-    document.getElementById("cleanedText").innerText = "";
+    let result = document.getElementById("result");
+    let text = document.getElementById("cleanedText");
 
-    // Файл через POST-запрос на сервер
+    result.innerText = "Загружаю...";
+    text.innerText = "";
+
     fetch("/analyze/", {
         method: "POST",
         body: formData
-    })
-    .then(async res => {
+    }).then(function(res) {
         if (!res.ok) {
-            const errorData = await res.json();
-            throw new Error(errorData.detail || "Неизвестная ошибка сервера");
+            return res.text().then(function(err) {
+                throw new Error(err);
+            });
         }
         return res.json();
-    })
-    .then(data => {
-        // Отображение результатов
-        document.getElementById("result").innerText =
-            data.is_spam ? "🚨 СПАМ" : "✅ НЕ СПАМ";
-        document.getElementById("cleanedText").innerText = data.cleaned_text;
-    })
-    .catch(err => {
-        // Показываем текст ошибки, если есть
-        document.getElementById("result").innerText = `❌ ${err.message}`;
-        document.getElementById("cleanedText").innerText = "";
+    }).then(function(data) {
+        result.innerText = data.is_spam ? "СПАМ" : "НЕ СПАМ";
+        text.innerText = data.cleaned_text || "";
+    }).catch(function(err) {
+        result.innerText = "Ошибка анализа";
+        text.innerText = err.message || "Неизвестная ошибка";
     });
 }
