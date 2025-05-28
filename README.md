@@ -44,7 +44,7 @@ spam_detector/
 1. **Клонируйте репозиторий:**
 
     ```bash
-    git clone https://github.com/your-username/spam_detector.git
+    git clone https://github.com/notBlueSpaceThinker/spam_detector.git
     cd spam_detector
     ```
 
