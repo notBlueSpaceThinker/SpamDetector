@@ -4,48 +4,30 @@ const fileInput = document.getElementById("fileElem");
 const browseLink = document.getElementById("browse");
 
 // Отключаем стандартное поведение для dnd
-dropZone.addEventListener("dragenter", stopDefaults, false);
-dropZone.addEventListener("dragover", stopDefaults, false);
-dropZone.addEventListener("dragleave", stopDefaults, false);
-dropZone.addEventListener("drop", stopDefaults, false);
+["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
+    dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    }, false);
+});
 
-function stopDefaults(e) {
-    e.preventDefault();
-    e.stopPropagation();
-}
-
-// Наведение и убирание подсветки
-dropZone.addEventListener("dragenter", function() {
-    dropZone.classList.add("highlight");
-}, false);
-
-dropZone.addEventListener("dragover", function() {
-    dropZone.classList.add("highlight");
-}, false);
-
-dropZone.addEventListener("dragleave", function() {
+// Подсветка зоны при перетаскивании
+dropZone.addEventListener("dragenter", () => dropZone.classList.add("highlight"), false);
+dropZone.addEventListener("dragover", () => dropZone.classList.add("highlight"), false);
+dropZone.addEventListener("dragleave", () => dropZone.classList.remove("highlight"), false);
+dropZone.addEventListener("drop", (e) => {
     dropZone.classList.remove("highlight");
-}, false);
-
-dropZone.addEventListener("drop", function() {
-    dropZone.classList.remove("highlight");
-}, false);
-
-// Обработка сброса файла
-dropZone.addEventListener("drop", function(e) {
-    let files = e.dataTransfer.files;
-    if (files && files.length > 0) {
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
         processFile(files[0]);
     }
 }, false);
 
 // Клик по ссылке вызывает input
-browseLink.onclick = function() {
-    fileInput.click();
-};
+browseLink.onclick = () => fileInput.click();
 
-// Файл выбран вручную
-fileInput.onchange = function() {
+// Обработка выбора файла вручную
+fileInput.onchange = () => {
     if (fileInput.files.length > 0) {
         processFile(fileInput.files[0]);
     }
@@ -55,11 +37,11 @@ fileInput.onchange = function() {
 function processFile(file) {
     if (!file) return;
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("file", file);
 
-    let result = document.getElementById("result");
-    let text = document.getElementById("cleanedText");
+    const result = document.getElementById("result");
+    const text = document.getElementById("cleanedText");
 
     result.innerText = "Загружаю...";
     text.innerText = "";
@@ -67,17 +49,15 @@ function processFile(file) {
     fetch("/analyze/", {
         method: "POST",
         body: formData
-    }).then(function(res) {
+    }).then(res => {
         if (!res.ok) {
-            return res.text().then(function(err) {
-                throw new Error(err);
-            });
+            return res.text().then(err => { throw new Error(err); });
         }
         return res.json();
-    }).then(function(data) {
-        result.innerText = data.is_spam ? "ну спамСПАМ" : "НЕ СПАМ";
+    }).then(data => {
+        result.innerText = data.is_spam ? "СПАМ" : "НЕ СПАМ";
         text.innerText = data.cleaned_text || "";
-    }).catch(function(err) {
+    }).catch(err => {
         result.innerText = "Ошибка анализа";
         text.innerText = err.message || "Неизвестная ошибка";
     });
