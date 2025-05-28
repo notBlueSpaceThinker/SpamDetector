@@ -12,7 +12,27 @@
 <h3>Структура проекта</h3>
 
 <details> <summary>Нажми, чтобы раскрыть</summary>
-<pre> ```plaintext spam_detector/ ├── core/ │ ├── file_loader.py # Загрузка и чтение текстов │ ├── text_cleaner.py # Очистка текста │ └── spam_filter.py # Фильтрация спама │ ├── data/ # Вспомогательные данные (словари, примеры и т.п.) │ └── sample_messages.txt │ ├── uploads/ # Загруженные пользователем файлы │ ├── static/ │ ├── style.css # Стили интерфейса │ └── script.js # Скрипт для загрузки файлов │ ├── templates/ │ └── index.html # Jinja2-шаблон главной страницы │ ├── main.py # Основной файл FastAPI-приложения └── requirements.txt # Зависимости проекта ``` </pre>
+<pre>```spam_detector/
+├── core/
+│   ├── file_loader.py       # Загрузка и чтение текстов
+│   ├── text_cleaner.py      # Очистка текста
+│   └── spam_filter.py       # Фильтрация спама
+│
+├── data/                   # Вспомогательные данные (словари, примеры и т.п.)
+│   └── sample_messages.txt
+│
+├── uploads/                # Загруженные пользователем файлы
+│
+├── static/
+│   ├── style.css           # Стили интерфейса
+│   └── script.js           # Скрипт для загрузки файлов
+│
+├── templates/
+│   └── index.html          # Jinja2-шаблон главной страницы
+│
+├── main.py                 # Основной файл FastAPI-приложения
+└── requirements.txt        # Зависимости проекта
+```</pre>
 </details>
 
 <h3>💫 Как запустить проект</h3>
