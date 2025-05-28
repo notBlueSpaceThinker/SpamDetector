@@ -1,25 +1,23 @@
-import csv
 import os 
+import pandas
 
 base_dir = os.path.dirname(os.path.dirname(__file__))
-file_path = os.path.join(base_dir, "data", "spam_dataset.csv")
+file_path = os.path.join(base_dir, "data", "spam_dataset.xlsx")
+
+spam_data = pandas.read_excel(file_path, engine='openpyxl', header=None)
 
 temp_spam_dict = {}
-with open(file_path, newline='', encoding='utf-8') as csvdataset:
-    reader = csv.reader(csvdataset, delimiter='\t')
-    for row in reader:
-        if len(row) == 2:
-            word = row[0].strip()
-            try:
-                value = int(row[1].strip())
-                temp_spam_dict[word] = value
-            except ValueError:
-                print("Ошибка в data-сете")
-                raise ValueError(f"Не удается преобразовать строчку {row}")
+for _, row in spam_data.iterrows():
+    if len(row) >= 2:
+        spam_word = str(row[0]).strip()
+        try:
+            value = int(row[1])
+            temp_spam_dict[spam_word] = value
+        except ValueError:
+            raise ValueError(f"Ошибка в строке: {row.values}")
 
 SPAM_KEYWORDS = temp_spam_dict
-SPAM_URLS = {"https://www.hse.ru": 3} #in process
-
+SPAM_URLS = {"https://www.hse.ru": 3} #in progress
 
 def is_spam(text: str|list[str], threshold: float = 0.3) -> bool:
     if isinstance(text, list):
