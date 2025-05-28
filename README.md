@@ -14,27 +14,29 @@
 
 <details>
 <summary>Нажми, чтобы раскрыть</summary>
+
+```plaintext
 spam_detector/
 ├── core/
-│ ├── file_loader.py # Загрузка и чтение текстов
-│ ├── text_cleaner.py # Очистка текста
-│ └── spam_filter.py # Фильтрация спама
+│   ├── file_loader.py       # Загрузка и чтение текстов
+│   ├── text_cleaner.py      # Очистка текста
+│   └── spam_filter.py       # Фильтрация спама
 │
-├── data/ # Вспомогательные данные (словари, примеры и т.п.)
-│ └── sample_messages.txt
+├── data/                   # Вспомогательные данные (словари, примеры и т.п.)
+│   └── sample_messages.txt
 │
-├── uploads/ # Загруженные пользователем файлы
+├── uploads/                # Загруженные пользователем файлы
 │
 ├── static/
-│ ├── style.css # Стили интерфейса
-│ └── script.js # Скрипт для загрузки файлов
+│   ├── style.css           # Стили интерфейса
+│   └── script.js           # Скрипт для загрузки файлов
 │
 ├── templates/
-│ └── index.html # Jinja2-шаблон главной страницы
+│   └── index.html          # Jinja2-шаблон главной страницы
 │
-├── main.py # Основной файл FastAPI-приложения
-└── requirements.txt # Зависимости проекта
-</details>
+├── main.py                 # Основной файл FastAPI-приложения
+└── requirements.txt        # Зависимости проекта
+</details> ```
 
 ### 💫 Как запустить проект
 
