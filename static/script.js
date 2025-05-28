@@ -1,3 +1,4 @@
+
 // Получаем нужные элементы
 const dropZone = document.getElementById("drop-area");
 const fileInput = document.getElementById("fileElem");
@@ -80,5 +81,5 @@ function processFile(file) {
     }).catch(function(err) {
         result.innerText = "Ошибка анализа";
         text.innerText = err.message || "Неизвестная ошибка";
-    });
+    })
 }

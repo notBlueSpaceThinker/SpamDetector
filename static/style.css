@@ -28,29 +28,24 @@ input[type="file"] {
 
 label[for="file-upload"] {
     display: inline-block;
-    padding: 12px 24px;
-    background-color: #00ffaa;
-    color: #121212;
-    cursor: pointer;
+    padding: 12px 20px;
+    background-color: #444;
+    color: #fff;
     border-radius: 8px;
-    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 20px;
     transition: background-color 0.3s ease;
 }
 
-label:hover {
-    background-color: #00ddaa;
+label[for="file-upload"]:hover {
+    background-color: #666;
 }
 
-#result {
-    font-size: 22px;
-    margin-top: 25px;
-    color: #00ffaa;
-}
-
-pre {
-    text-align: left;
-    margin-top: 20px;
-    padding: 15px;
+#drop-area {
+    border: 2px dashed #666;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
     background: #1e1e1e;
     border-radius: 8px;
     max-width: 700px;
@@ -104,5 +99,4 @@ a {
 
 a:hover {
     color: #1fa8ff;
-
 }

@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Spam Detector</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Загрузите файл для анализа</h1>
-    <div id="drop-area">
-        <input type="file" id="fileElem" accept=".txt" onchange="handleFiles(this.files)">
-        <label for="fileElem">Выберите файл</label>
+    <h1>📄 Определение спама</h1>
+
+    <div id="drop-area" class="drop-zone">
+        <p>Перетащите .txt файл сюда или <span id="browse">выберите файл</span></p>
+        <input type="file" id="fileElem" accept=".txt" style="display:none">
     </div>
+
     <div id="result"></div>
     <pre id="cleanedText"></pre>
+
     <script src="/static/script.js"></script>
 </body>
 </html>
