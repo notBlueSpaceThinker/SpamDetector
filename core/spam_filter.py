@@ -20,8 +20,11 @@ SPAM_KEYWORDS = temp_spam_dict
 SPAM_URLS = {"https://www.hse.ru": 3} #in progress
 
 def is_spam(text: str|list[str], threshold: float = 0.3) -> bool:
-    if isinstance(text, list):
-        text = " ".join(text)
+    try:
+        if isinstance(text, list):
+            text = " ".join(text)
+    except:
+        raise ValueError("Ошибка в обработке файла")
 
     text_lower = text.lower()
     total_words = len(text_lower.split())

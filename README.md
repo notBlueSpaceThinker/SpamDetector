@@ -1,7 +1,7 @@
 # Spam Detector
 
 Проект для анализа текстовых файлов на предмет спама.  
-Используется FastAPI для веб-интерфейса, NLTK для обработки текста и простой словарный фильтр в виде .csv таблицы для определения спама.
+Используется FastAPI для веб-интерфейса, NLTK для обработки текста и простой словарный фильтр в виде .xlsx таблицы для определения спама.
 
 ### Особенности
 
@@ -44,7 +44,7 @@ spam_detector/
 1. **Клонируйте репозиторий:**
 
     ```bash
-    git clone https://github.com/notBlueSpaceThinker/SpamDetector
+    git clone https://github.com/your-username/spam_detector.git
     cd spam_detector
     ```
 
