@@ -4,34 +4,55 @@ const fileInput = document.getElementById("fileElem");
 const browseLink = document.getElementById("browse");
 
 // Отключаем стандартное поведение для dnd
-["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
-    dropZone.addEventListener(eventName, (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-    }, false);
+const dragEevents = ["dragenter", "dragover", "dragleave", "drop"]
+dragEevents.forEach(eventName => {
+    dropZone.addEventListener(eventName, (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+    });
 });
 
 // Подсветка зоны при перетаскивании
-dropZone.addEventListener("dragenter", () => dropZone.classList.add("highlight"), false);
-dropZone.addEventListener("dragover", () => dropZone.classList.add("highlight"), false);
-dropZone.addEventListener("dragleave", () => dropZone.classList.remove("highlight"), false);
-dropZone.addEventListener("drop", (e) => {
+["dragenter", "dragover"].forEach(eventName => {
+    dropZone.addEventListener(eventName, () => {
+        dropZone.classList.add("highlight");
+    });
+});
+
+dropZone.addEventListener("dragleave", () => {
     dropZone.classList.remove("highlight");
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-        processFile(files[0]);
-    }
-}, false);
+});
+
+// Обработка сброса файла
+dropZone.addEventListener("drop", (event) => {
+    dropZone.classList.remove("highlight");
+
+    const files = event.dataTransfer.files;
+    handleFileList(files);
+});
 
 // Клик по ссылке вызывает input
 browseLink.onclick = () => fileInput.click();
 
 // Обработка выбора файла вручную
 fileInput.onchange = () => {
-    if (fileInput.files.length > 0) {
-        processFile(fileInput.files[0]);
-    }
+    handleFileList(fileInput.files);
 };
+
+// Обработка принятия файла
+function handleFileList(files) {
+    if (files.length === 0) {
+        alert("Файл не найден!");
+        return;
+    }
+
+    if (files.length > 1) {
+        alert("Выберите только 1 файл");
+        return;
+    }
+
+    processFile(files[0]);
+}
 
 // Обработка файла
 function processFile(file) {
